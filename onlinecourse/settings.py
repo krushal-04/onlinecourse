@@ -55,7 +55,7 @@ ROOT_URLCONF = 'onlinecourse.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],  # 👈 ADD THIS
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
