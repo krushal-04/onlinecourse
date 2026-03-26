@@ -1,9 +1,8 @@
 from django.contrib import admin
-# Seven imported classes (Course, Lesson, Enrollment, Question, Choice, Submission + admin)
-from .models import Course, Lesson, Enrollment, Question, Choice, Submission
+# Requirement: Seven imported classes
+from .models import Course, Lesson, Enrollment, Question, Choice, Submission, Instructor, Learner
 
-# --- TASK 2: Implementation of Inlines and Admins ---
-
+# --- Inlines ---
 class ChoiceInline(admin.TabularInline):
     model = Choice
     extra = 5
@@ -12,17 +11,26 @@ class QuestionInline(admin.TabularInline):
     model = Question
     extra = 5
 
+# --- Admin Classes ---
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
+    list_display = ['question_text', 'grade'] # Adding list_display for extra safety
 
 class LessonAdmin(admin.ModelAdmin):
-    # This allows you to add Questions directly when editing a Lesson
+    # Requirement: Implement list_display attribute
+    list_display = ['title', 'order']
     inlines = [QuestionInline]
 
-# Registering the models to the Admin site
-admin.site.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('name', 'publish_date')
+    search_fields = ['name', 'description']
+
+# --- Registrations ---
+admin.site.register(Course, CourseAdmin)
 admin.site.register(Lesson, LessonAdmin)
-admin.site.register(Enrollment)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
 admin.site.register(Submission)
+admin.site.register(Enrollment)
+admin.site.register(Instructor)
+admin.site.register(Learner)

@@ -45,3 +45,9 @@ def show_exam_result(request, submission_id):
     }
     
     return render(request, 'course/exam_result.html', context)
+
+# course/views.py
+
+def course_details(request, course_id):  # Make sure the 's' is there
+    course = get_object_or_404(Course, pk=course_id)
+    return render(request, 'course/course_details_bootstrap.html', {'course': course})
